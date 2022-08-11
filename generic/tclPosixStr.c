@@ -1070,6 +1070,9 @@ Tcl_SignalId(
 #if defined(SIGINFO) && (!defined(SIGPWR) || (SIGINFO != SIGPWR))
     case SIGINFO: return "SIGINFO";
 #endif
+#ifdef SIGPROT
+    case SIGPROT: return "SIGPROT";
+#endif
     }
     return "unknown signal";
 }
@@ -1203,6 +1206,9 @@ Tcl_SignalMsg(
 #endif
 #if defined(SIGINFO) && (!defined(SIGPWR) || (SIGINFO != SIGPWR))
     case SIGINFO: return "information request";
+#endif
+#ifdef SIGPROT
+    case SIGPROT: return "in-process protection exception";
 #endif
     }
     return "unknown signal";
