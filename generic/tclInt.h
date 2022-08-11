@@ -2315,7 +2315,11 @@ typedef struct Interp {
  * (notably tbcload) require it.
  */
 
+#ifdef __CHERI_PURE_CAPABILITY__
+#define TCL_ALIGN(x) (((int)(x) + 15) & ~15)
+#else
 #define TCL_ALIGN(x) (((int)(x) + 7) & ~7)
+#endif
 
 /*
  * The following enum values are used to specify the runtime platform setting
