@@ -169,7 +169,7 @@ static BuiltinFunc const tclBuiltinFuncTable[] = {
 typedef struct TEBCdata {
     ByteCode *codePtr;		/* Constant until the BC returns */
 				/* -----------------------------------------*/
-    ptrdiff_t *catchTop;	/* These fields are used on return TO this */
+    uintptr_t *catchTop;	/* These fields are used on return TO this */
     Tcl_Obj *auxObjList;	/* this level: they record the state when a */
     CmdFrame cmdFrame;		/* new codePtr was received for NR */
                                 /* execution. */
@@ -424,7 +424,7 @@ VarHashCreateVar(
 
 #define OBJ_AT_DEPTH(n)	*(tosPtr-(n))
 
-#define CURR_DEPTH	((ptrdiff_t) (tosPtr - initTosPtr))
+#define CURR_DEPTH	((uintptr_t) (tosPtr - initTosPtr))
 
 #define STACK_BASE(esPtr) ((esPtr)->stackWords - 1)
 
@@ -2024,7 +2024,7 @@ ArgumentBCEnter(
  *----------------------------------------------------------------------
  */
 #define	bcFramePtr	(&TD->cmdFrame)
-#define	initCatchTop	((ptrdiff_t *) (TD->stack-1))
+#define	initCatchTop	((uintptr_t *) (TD->stack-1))
 #define	initTosPtr	((Tcl_Obj **) (initCatchTop+codePtr->maxExceptDepth))
 #define esPtr		(iPtr->execEnvPtr->execStackPtr)
 
@@ -8067,7 +8067,7 @@ TEBCresume(
 
 	while (auxObjList) {
 	    if ((catchTop != initCatchTop)
-		    && (*catchTop > (ptrdiff_t)
+		    && (*catchTop > (uintptr_t)
 			auxObjList->internalRep.twoPtrValue.ptr2)) {
 		break;
 	    }
