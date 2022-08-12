@@ -6901,7 +6901,7 @@ TEBCresume(
 	iterVarPtr = LOCAL(infoPtr->loopCtTemp);
 	valuePtr = iterVarPtr->value.objPtr;
 	iterNum = valuePtr->internalRep.longValue + 1;
-	TclSetLongObj(valuePtr, iterNum);
+	TclSetLongObj(valuePtr, INT2PTR(iterNum));
 
 	/*
 	 * Check whether all value lists are exhausted and we should stop the
