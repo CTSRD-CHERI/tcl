@@ -159,11 +159,11 @@ Tcl_JoinThread(
 {
 #ifdef TCL_THREADS
     int result;
-    unsigned long retcode, *retcodePtr = &retcode;
+    void *retcode, **retcodePtr = &retcode;
 
-    result = pthread_join((pthread_t) threadId, (void**) retcodePtr);
+    result = pthread_join((pthread_t) threadId, retcodePtr);
     if (state) {
-	*state = (int) retcode;
+	*state = PTR2INT(retcode);
     }
     return (result == 0) ? TCL_OK : TCL_ERROR;
 #else
